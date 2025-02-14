@@ -1,0 +1,35 @@
+
+
+all: demo_fechas
+
+# -- CREACIÓ ARXIUS --
+
+# no fa falta fecha.hh a la compilació perquè el busca automaticament
+fecha.o: fecha.cc fecha.hh
+	g++ -c fecha.cc
+
+main.o: main.cc fecha.cc fecha.hh
+		g++ -c main.cc
+
+demo_fechas: main.o fecha.o
+			g++ -o demo_fechas main.o fecha.o
+
+# -- COMANDOS -- 
+
+clean:
+	rm -f demo_fechas main.o fecha.o
+
+zip:
+	zip programa.zip *.o demo_fechas
+
+.PHONY: clean all zip
+
+# -- COMENTARIS --
+
+# main.cc -> fecha
+# fecha.cc -> fecha
+# demofechas -> fecha, main
+
+
+# resultat : arxius del que depen
+#			command per generar-lo
