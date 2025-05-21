@@ -5,3 +5,6 @@ program.exe: main.o
 	$(CXX) $(CXXFLAGS) -o program.exe $^
 
 main.o: *.cc *.hh
+
+tar: 
+	tar -cf finder.tar finder.hh
