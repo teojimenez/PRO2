@@ -1,0 +1,59 @@
+
+
+
+
+
+La classe FINDER es un contenidor de punters a obj tipus tipus
+
+T ha de ser un tipus d'objecte get_rect() que obtingui el rectangle del obj
+
+rect = left, top, right, bottom
+
+Finder asocia cada obj amb el rect que ocupa (que es poguin fer consultes)
+
+//punters als obj que interesecten amb qrect
+std::set<const T *> query(pro2::Rect qrect) const;
+qrect seria la camara per exemple  (coordenades)
+
+ Aquestes consultes "trucar a query()", amb el mètode query, reben un rectangle qrect i ens retornen tots els ´PUNTERS´ a objectes de tipus T tals que si demanem el seu rectangle amb get_rect, aquest intersecta amb qrect.
+
+
+Si qrect representa una finestra, query permet localitzar aquells objectes que són visibles a través de la finestra (ja sigui totalment o en part).
+
+
+
+
+El rectangle màxim de l’espai bidimensional és (0, 0, 20000, 20000), és a dir, un quadrat de 20000 × 20000 amb la cantonada superior esquerra al punt (0, 0). 
+
+(Recordeu que l’eix de les ys creix en direcció descendent.)
+
+Un sol objecte no pot tenir un rectangle amb amplada o alçada major que 2000.
+
+Partir en trosos aquest rectangle
+
+Rectangles amb coordenades enteres
+
+
+
+
+
+////////////////////////////EJEMPLO
+
+
+int main() {
+    Finder<MiClase> finder;
+
+    MiClase a(1, 10.0f, 15.0f);
+    MiClase b(2, 20.0f, 25.0f);
+
+    finder.add(&a);
+    finder.add(&b);
+
+    pro2::Rect r{5.0f, 5.0f, 18.0f, 18.0f};  // xmin, ymin, xmax, ymax
+    auto resultados = finder.query(r);
+
+    for (auto ptr : resultados) {
+        std::cout << "Encontrado id=" << ptr->id
+                  << " en (" << ptr->x << "," << ptr->y << ")\n";
+    }
+}
